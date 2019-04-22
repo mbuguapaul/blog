@@ -8,6 +8,16 @@
                             <div class="col-lg-12">
                                 <div class="feature-img">
                                     <img class="img-fluid" src="{{asset('img/post_img/'.$post->image)}}" alt="" style="width: 100%">
+
+                                     @if($post->link==NULL)
+                                                
+                                                @else
+                                                <br><br>
+                                                <iframe width="420" height="315"
+src="https://www.youtube.com/embed/{{$post->link}}?autoplay=1">
+
+</iframe>
+                                                @endif<BR>
                                 </div>                                  
                             </div>
                             <!-- <div class="col-lg-3  col-md-3">

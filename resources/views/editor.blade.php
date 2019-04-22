@@ -50,7 +50,12 @@
                                <div class="form-group">
                                <input type="text" name="title" class="form-control" placeholder="Input the title" required> 
                                </div>
-                           
+                            <div class="form-group">
+                               <input type="text" name="link" class="form-control" placeholder="Youtube link if any" > 
+                               </div>
+                               <small style="color:red;">*The link Must be a Youtube link.<br>
+                               *Do not Get the link from a playlist<br>
+                               *You remain Liable to video content copyright.</small>
                             
                             <div class="form-group">
                                 <label for="category">Choose a category</label>
@@ -112,6 +117,7 @@
   <tr>
     
   <th>title</th>
+ 
   <th>comments</th>
   <th>edit</th>
   <th>delete</th>
@@ -120,13 +126,91 @@
   <tr>
    
     <td>{{$myposts->title}}</td>
-    <td>{{count($comments)}}</td>
+    @if(Auth::user()->userlevel==2)
+  <t>Editor</th>
+  @endif
+    <td>
+      
+     
+     <?php $number=0; ?>
+     @foreach($comments as $comment)
+    
+    
+     @if($comment->postid ==$myposts->id)
+ <?php $number=$number+1; ?>
+      
+     @endif
+
+    @endforeach
+    {{$number}}
+
+    
+  </td>
     <td> <a href="edit/{{$id=$myposts->id}}" class="genric-btn success small">edit</a></td>
     <td> <a href="delete/{{$id=$myposts->id}}" class="genric-btn danger small">delete</a></td>
   </tr>
   @endforeach
   </table>
+
+
+
+
 </div>
+
+
+@if(Auth::user()->userlevel==2)
+<center>All posts</center>
+<div class="container">
+  <table class="table table-hover">
+  <tr>
+    
+  <th>title</th>
+
+  <th>Editor</th>
+  <th>comments</th>
+  
+  <th>delete</th>
+  </tr>
+  @foreach($allposts as $myposts)
+  <tr>
+   
+    <td>{{$myposts->title}}</td>
+
+    @foreach($users as $user)
+    @if($myposts->userid==$user->id)
+  <td>{{$user->name}}</td>
+  @endif
+  @endforeach
+  
+    <td>
+      
+     
+     <?php $number=0; ?>
+     @foreach($comments as $comment)
+    
+    
+     @if($comment->postid ==$myposts->id)
+ <?php $number=$number+1; ?>
+      
+     @endif
+
+    @endforeach
+    {{$number}}
+
+    
+  </td>
+       <td> <a href="delete/{{$id=$myposts->id }}" class="genric-btn danger small">delete</a></td>
+  </tr>
+  @endforeach
+  </table>
+
+
+
+
+</div>
+
+
+@endif
 @else
 <div class="alert alert-danger container">
          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -343,13 +427,49 @@
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Read me
+          Manage Categories
         </a>
       </h4>
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+       
+
+
+
+       <!-- /////////////////////////// -->
+
+
+
+
+
+<table class="table table-hover">
+  <tr>
+    <th>Name</th>
+  
+    <th>Action</th>
+    
+
+
+  </tr>
+ @foreach($categories as $categorielist) 
+<tr>
+  
+  <td>{{$categorielist->category_name}}</td>
+
+ 
+    <td> <a href="deletecategory/{{$id=$categorielist->id}}" class="genric-btn danger small">delete</a></td>
+ 
+</tr>
+   @endforeach
+
+</table>
+
+
+
+
+
+       <!-- /////////////////////////// -->
       </div>
     </div>
   </div>

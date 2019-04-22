@@ -14,14 +14,17 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::post('/post/post_vote_up','PostController@post_up');
+
 Route::get('/', 'PostsController@welcome');
 Auth::routes();
-Route::post('newpost','postscontroller@store');
+Route::post('newpost','PostsController@store');
+Route::post('edit/editpost','PostsController@updatepost');
 
 Route::post('updateimg','HomeController@updateimg');
 Route::post('updateprf','HomeController@updateprf');
 
-Route::post('newcategory','postscontroller@storecategory');
+Route::post('newcategory','PostsController@storecategory');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'HomeController@profile');
 Route::get('detail/profile', 'HomeController@profile');
@@ -52,6 +55,11 @@ Route::get('/cselection/{id}', 'PostsController@catselection');
 Route::get('/edit/{id}', 'HomeController@editpost');
 Route::get('/delete/{id}', 'HomeController@deletepost');
 
+// delete category
+Route::get('/deletecategory/{id}', 'HomeController@deletecat');
+
 
 Route::get('activate','HomeController@activate');
 Route::post('detail/comment','CommentsController@comment');
+
+Route::post('like','PostsController@like');

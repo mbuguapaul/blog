@@ -8,6 +8,7 @@ use Image;
 use Auth;
 use App\updates;
 use App\User;
+use File;
 use App\comments;
 use App\posts;
 use Illuminate\Support\Facades\Input;
@@ -110,9 +111,11 @@ public function updateprf(Request $request)
          $data = [];
           $data['myposts']= DB::select('select * from posts where userid = ?', [$id]);
          $data['updates']=\App\updates::all();
+          $data['allposts']=\App\posts::all();
         $data['categories']=\App\categories::all();
-        $data['comments']=\App\comments::all();
+        $data['comments']=\App\comments::with('posts')->get();
         $data['users']=\App\User::all();
+
         return view('editor',$data);
     }
 
@@ -232,7 +235,6 @@ public function updateprf(Request $request)
 
 
 
-
     public function editpost($id)
     {
          $data['editpost']= DB::select('select * from posts where id = ?', [$id]);
@@ -244,11 +246,26 @@ public function updateprf(Request $request)
 
      public function deletepost($id)
     {
+        
         DB::delete('delete from posts  where id = ?',[$id]);
         DB::delete('delete from comments  where postid = ?',[$id]);
-        return redirect('editor')->with('status',' post deleted successfully');
+
+        $request=  DB::table('posts')->where('id', '=', $id)->get();
+        $image_path = "img/post_img/".$request; 
+         if (file_exists($image_path)) {
+
+          @unlink($image_path);
+
+   }
+
+        return redirect('editor')->with('status',' post deleted successfully'.$request);
     }
-      
+     
+          public function deletecat($id)
+    {
+        DB::delete('delete from categories  where id = ?',[$id]);
+               return redirect('editor')->with('status',' category deleted successfully');
+    } 
         
 
 }
