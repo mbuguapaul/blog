@@ -147,7 +147,15 @@
     
   </td>
     <td> <a href="edit/{{$id=$myposts->id}}" class="genric-btn success small">edit</a></td>
-    <td> <a href="delete/{{$id=$myposts->id}}" class="genric-btn danger small">delete</a></td>
+    <td>
+      <form action="deletepost" method="post">
+        <input type="hidden" name="image" value="{{$myposts->image}}">
+        <input type="hidden" name="_token"value="{{csrf_token()}}"/>
+        <input type="hidden" name="postid" value="{{$myposts->id}}">
+        <button class="genric-btn danger small">delete</button>
+      </form>
+     
+     </td>
   </tr>
   @endforeach
   </table>
@@ -199,7 +207,17 @@
 
     
   </td>
-       <td> <a href="delete/{{$id=$myposts->id }}" class="genric-btn danger small">delete</a></td>
+      <!--  <td> <a href="delete/{{$id=$myposts->id }}" class="genric-btn danger small">delete</a></td> -->
+
+        <td>
+      <form action="deletepost" method="post">
+        <input type="hidden" name="image" value="{{$myposts->image}}">
+        <input type="hidden" name="_token"value="{{csrf_token()}}"/>
+        <input type="hidden" name="postid" value="{{$myposts->id}}">
+        <button class="genric-btn danger small">delete</button>
+      </form>
+     
+     </td>
   </tr>
   @endforeach
   </table>

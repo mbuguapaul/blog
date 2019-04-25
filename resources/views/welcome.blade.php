@@ -448,12 +448,13 @@
 
                                     @endforeach
                                     {{$number}}
-                                    &nbsp &nbsp &nbsp<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    &nbsp &nbsp &nbsp
+                                    <!-- <i class="fa fa-thumbs-up" aria-hidden="true"></i> -->
                                     
-                                    @guest
+                                   <!--  @guest
                                     @else
                                    <a href="" id="like" class="like" data-id="{{$post->id}}">Like</a>
-                                   @endif
+                                   @endif -->
                                                                               
                                             </div>
                                         </div>
@@ -495,9 +496,9 @@
                                 <div class="br"></div>
                             </aside>
                             <aside class="single_sidebar_widget author_widget">
-                                <img class="author_img rounded-circle" src="img/blog/author.png" alt="">
-                                <h4>Paul Mbugua</h4>
-                                <p>Senior blog writer</p>
+                                <img class="author" src="img/blog/author.png" alt="">
+                                <h4>MUSTCU</h4>
+                                <p>Meru University of Science and technology Christian Union</p>
                                 <!-- <div class="social_icon">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>

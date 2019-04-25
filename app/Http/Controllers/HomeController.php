@@ -244,22 +244,29 @@ public function updateprf(Request $request)
         return view('editpost',$data);
     }
 
-     public function deletepost($id)
+     public function deletepost(Request $request)
     {
-        
+
+        $image = $request->input('image');
+        $id = $request->input('postid');
+
+        if(empty($image)){
         DB::delete('delete from posts  where id = ?',[$id]);
         DB::delete('delete from comments  where postid = ?',[$id]);
+        }
+        else{
+            // str_replace('\\','/',public_path());
+            $myFile = public_path('/img/post_img/'.$image);
+              unlink($myFile) or die('Couldnt delete file');
+        DB::delete('delete from posts  where id = ?',[$id]);
+        DB::delete('delete from comments  where postid = ?',[$id]);
+        }
+        
 
-        $request=  DB::table('posts')->where('id', '=', $id)->get();
-        $image_path = "img/post_img/".$request; 
-         if (file_exists($image_path)) {
-
-          @unlink($image_path);
-
-   }
-
-        return redirect('editor')->with('status',' post deleted successfully'.$request);
+        return redirect('editor')->with('status',' post deleted successfully');
     }
+
+
      
           public function deletecat($id)
     {

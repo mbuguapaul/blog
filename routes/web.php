@@ -15,6 +15,7 @@
 //     return view('welcome');
 // });
 Route::post('/post/post_vote_up','PostController@post_up');
+Route::post('/deletepost','HomeController@deletepost');
 
 Route::get('/', 'PostsController@welcome');
 Auth::routes();

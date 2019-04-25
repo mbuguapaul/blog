@@ -38,8 +38,8 @@ public function post_up(Request $r)
  public function welcome()
     {
         $data = [];
- $data['popularposts']=\App\posts::all();
- $data['posts']=\App\posts::orderBy('id','DESC')->paginate(4);
+ $data['popularposts']=\App\posts::orderBy('id','ASC')->paginate(6);
+ $data['posts']=\App\posts::orderBy('id','DESC')->paginate(8);
  $data['categories']=\App\categories::all();
  $data['updates']=\App\updates::all();
  $data['editor']=\App\User::all();
